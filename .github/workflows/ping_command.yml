@@ -1,0 +1,24 @@
+name: Ping Command
+
+on:
+  repository_dispatch:
+    types: [ping-command]
+
+jobs:
+  helloWorld:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_PAT }}
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.client_payload.pull_request.head.ref }}
+
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ github.event.client_payload.github.payload.comment.id }}
+          body: |
+            >pong ${{ github.event.client_payload.slash_command.args }}
+          reaction-type: hooray

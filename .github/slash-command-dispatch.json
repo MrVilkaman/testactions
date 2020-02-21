@@ -1,0 +1,14 @@
+[
+  {
+    "command": "ping",
+    "permission": "none",
+    "issue_type": "both",
+    "allow_edits": true
+  },
+  {
+    "command": "coverage",
+    "permission": "none",
+    "issue_type": "both",
+    "allow_edits": true
+  }
+]
