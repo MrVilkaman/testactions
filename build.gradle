@@ -5,13 +5,14 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath "com.hiya:jacoco-android:0.2"
     }
 }
 
@@ -19,10 +20,63 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+
+
     }
+}
+
+subprojects {
+    pluginManager.withPlugin("com.android.application") {
+        apply plugin: "com.hiya.jacoco-android"
+
+        jacoco {
+            toolVersion = "0.8.4"
+        }
+
+        jacocoAndroidUnitTestReport {
+            excludes += ['**/R.class',
+                         '**/R$*.class',
+                         '**/*$ViewInjector*.*',
+                         '**/BuildConfig.*',
+                         '**/Manifest*.*',
+                         '**/*Test*.*',
+                         '**/BR.*',
+                         '**/R.*',
+                         '**/R$*.*',
+                         '**/BuildConfig.*',
+                         '**/Manifest*.*',
+                         '**/*_MembersInjector.*',
+                         '**/Dagger*Component.*',
+                         '**/Dagger*Component$Builder.*',
+                         '**/*Module_*Factory.*',
+                         '**/*Fragment*.*',
+                         '**/*Activity*.*',
+                         '**/*Adapter*.*',
+                         '**/*ViewPager*.*',
+                         '**/*ViewHolder*.*',
+                         'android/**/*.*',
+                         '**/*Fragment.*',
+                         '**/*Activity.*']
+        }
+
+        jacocoAndroidUnitTestReport {
+            csv.enabled false
+            html.enabled true
+            xml.enabled true
+        }
+
+//         always run the tests before generating the report
+//        codeCoverageReport.dependsOn {
+//            subprojects*.test
+//        }
+    }
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
