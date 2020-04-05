@@ -8,6 +8,13 @@ jobs:
   helloWorld:
     runs-on: ubuntu-latest
     steps:
+
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_PAT }}
+          repository: ${{ github.event.client_payload.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.client_payload.pull_request.head.ref }}
+
       - name: Update comment
         uses: peter-evans/create-or-update-comment@v1
         with:
