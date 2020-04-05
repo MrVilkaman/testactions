@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Run Unit Test
-        uses: eskatos/gradle-command-action@v1
+        uses: eskatos/gradle-command-action@v1.1
         with:
           arguments: test -PbuildScan=true -PhideAword=true -PCI=true -PhideSomeBuildVariant=true
         id: gradle
