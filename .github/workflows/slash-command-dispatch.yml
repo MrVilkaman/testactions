@@ -27,11 +27,11 @@ jobs:
 
             [1]: ${{ steps.vars.outputs.run-url }}
 
-        # Basic configuration
-        - name: Slash Command Dispatch
-          uses: peter-evans/slash-command-dispatch@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            reaction-token: ${{ secrets.GITHUB_TOKEN }}
-            commands: coverage
-            permission: none
+      # Basic configuration
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          reaction-token: ${{ secrets.GITHUB_TOKEN }}
+          commands: coverage
+          permission: none
