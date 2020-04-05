@@ -9,10 +9,28 @@ jobs:
   codeCoverage:
     runs-on: ubuntu-latest
     steps:
-      - name: Output command and arguments
-        run: |
-          echo ${{ github.event.client_payload.slash_command.command }}
-          echo ${{ github.event.client_payload.slash_command.args }}
-          echo ${{ github.event.client_payload.slash_command.arg1 }}
-          echo ${{ github.event.client_payload.slash_command.arg2 }}
-          echo ${{ github.event.client_payload.slash_command.arg3 }}
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Cache Gradle wrapper
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Cache Gradle caches
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Unit Test
+          run: ./gradlew testDebugUnitTest
+          continue-on-error: true # IMPORTANT: allow pipeline to continue to Android Test Report step
+
+      - name: Android Test Report
+        uses: asadmansr/android-test-report-action@v1.2.0
