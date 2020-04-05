@@ -22,4 +22,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           reaction-token: ${{ secrets.GITHUB_TOKEN }}
-          config-from-file: .github/slash-command-dispatch.json
+          commands: coverage, ping
+          permission: none
+#          config-from-file: .github/slash-command-dispatch.json
