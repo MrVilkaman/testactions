@@ -1,0 +1,52 @@
+name: Android CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Words
+        uses: actions/checkout@v2
+
+      - name: Checkout Logic
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_PAT }}
+          repository: skyeng/words-logic
+          path: words-logic
+          ref: 'master'
+
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Cache Gradle wrapper
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+
+      - name: Cache Gradle caches
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Unit Test
+        uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: test -PbuildScan=true -PhideAword=true -PCI=true -PhideSomeBuildVariant=true
+        id: gradle
+
+      - uses: codecov/codecov-action@v1
+        with:
+          #  token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
