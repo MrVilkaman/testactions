@@ -10,29 +10,6 @@ jobs:
   slashCommandDispatch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Add reaction
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          comment-id: ${{ github.event.comment.id }}
-          reaction-type: hooray
-
-      - name: Create URL to the run output
-        id: vars
-        run: echo ::set-output name=run-url::https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
-
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          #          issue-number: ${{ github.event.issue.number }}
-          comment-id: ${{ github.event.comment.id }}
-          body: |
-            Run coverage!
-            [Command run output][1]
-
-            [1]: ${{ steps.vars.outputs.run-url }}
-
       # Basic configuration
       - name: Slash Command Dispatch
         uses: peter-evans/slash-command-dispatch@v1
