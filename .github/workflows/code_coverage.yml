@@ -1,0 +1,18 @@
+name: Code Coverage Runner
+
+on:
+  repository_dispatch:
+    types: [coverage-command]
+
+
+jobs:
+  codeCoverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output command and arguments
+        run: |
+          echo ${{ github.event.client_payload.slash_command.command }}
+          echo ${{ github.event.client_payload.slash_command.args }}
+          echo ${{ github.event.client_payload.slash_command.arg1 }}
+          echo ${{ github.event.client_payload.slash_command.arg2 }}
+          echo ${{ github.event.client_payload.slash_command.arg3 }}
