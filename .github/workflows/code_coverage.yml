@@ -70,6 +70,5 @@ jobs:
         uses: eskatos/gradle-command-action@v1
         with:
           arguments: jacocoFullTestReport
-        id: gradle
         continue-on-error: true # IMPORTANT: allow pipeline to continue to Android Test Report step
 
