@@ -16,6 +16,11 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun addition_isCorrect2() {
+        assertEquals(0, SomeUtils.qwer(-4, -4))
+    }
+
+    @Test
     fun addition_isNotCorrect() {
         assertEquals(4, 2 + 2)
     }
