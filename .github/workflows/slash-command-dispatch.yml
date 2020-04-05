@@ -35,7 +35,8 @@ jobs:
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.payload.issue.number }}
+          issue-number: ${{ github.event.issue.number }}
+#          comment-id: ${{ github.event.comment.id }}
           body: |
             [Command run output][1]
 
