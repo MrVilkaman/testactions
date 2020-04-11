@@ -1,0 +1,13 @@
+name: Ping Command
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  helloWorld:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Install NDK
+        run: sudo echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
