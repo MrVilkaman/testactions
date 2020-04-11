@@ -10,4 +10,4 @@ jobs:
     steps:
 
       - name: Install NDK
-        run: sudo echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
+        run:  echo "y" | sudo $ANDROID_HOME/tools/bin/sdkmanager "ndk;20.0.5594570"
